@@ -17,8 +17,7 @@
     <td><button class="bubble-legend-symbol"><a href="/create">Create</a></button></td>
     <c:forEach items="${products}" var="p" varStatus="loop">
         <tr>
-
-            <td>${p.id}</td>
+            <td>${loop.count}</td>
             <td>${p.name}</td>
             <td><img src="${p.img}" width="200" height="150"></td>
             <td><button><a href="/edit?index=${loop.index}">edit</a></button></td>

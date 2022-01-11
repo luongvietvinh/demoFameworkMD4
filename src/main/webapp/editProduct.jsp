@@ -20,10 +20,9 @@
         <div class="form-btn">
 
             <span>Edit Product</span>
-            <hr id="Indicator">
         </div>
 
-        <form method="post">
+        <form action="/edit" method="post">
             <input type="text" name="id" value="${p.id}">
             <input type="text" name="name" value="${p.name}">
             <input type="text" name="img" value="${p.img}">

@@ -3,15 +3,14 @@ package controller;
 
 import model.Product;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import service.ProductService;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 public class ProductController {
@@ -20,7 +19,7 @@ public class ProductController {
 
 
     @GetMapping("/product")
-    public void showProduct(HttpServletRequest request, HttpServletResponse response)  {
+    public void showProduct(HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("products", ProductService.products);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ShowProduct.jsp");
         try {
@@ -29,47 +28,35 @@ public class ProductController {
             e.printStackTrace();
         }
     }
+
     @GetMapping("/create")
-    public String createForm(HttpServletRequest request, HttpServletResponse response) {
+    public String createForm() {
         return "/createProduct.jsp";
     }
-    @PostMapping ("/create")
-    public void createProduct (HttpServletRequest request, HttpServletResponse response){
-        List<Product> list = ProductService.products;
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String img = request.getParameter("img");
-        list.add(new Product(id,name,img));
-        try {
-            response.sendRedirect("/product");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    @GetMapping("/edit")
-    public String editForm(HttpServletRequest request){
-        int index = Integer.parseInt(request.getParameter("index"));
-        request.setAttribute("p", ProductService.products.get(index) );
 
+    @PostMapping("/create")
+    public String createProduct(@ModelAttribute Product product) {
+        productService.create(product);
+        return "redirect:/product";
+    }
+
+    @GetMapping("/edit")
+    public String editForm(HttpServletRequest request, @RequestParam int index) {
+        request.setAttribute("p", ProductService.products.get(index));
         return "/editProduct.jsp";
     }
-   @PostMapping("/edit")
-    public String edit (HttpServletRequest request){
-        int index = Integer.parseInt(request.getParameter("index"));
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String img = request.getParameter("img");
-        Product product = new Product(id,name,img);
-        productService.edit(index,product);
-        request.setAttribute("products" , ProductService.products);
-   return "/ShowProduct.jsp";
+
+    @PostMapping("/edit")
+    public String edit(@RequestParam int index, @ModelAttribute Product product){
+        productService.edit(index, product);
+        return "redirect:/product";
     }
-  @GetMapping("/delete")
-    public String delete(HttpServletRequest request){
-      int id = Integer.parseInt(request.getParameter("index"));
-        productService.delete(id);
-      return "/product";
-  }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam int index) {
+        productService.delete(index);
+        return "redirect:/product";
+    }
 
 
 }
