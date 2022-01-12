@@ -3,7 +3,9 @@ package controller;
 
 import model.Product;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import service.ProductService;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class ProductController {
@@ -19,19 +22,15 @@ public class ProductController {
 
 
     @GetMapping("/product")
-    public void showProduct(HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("products", ProductService.products);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ShowProduct.jsp");
-        try {
-            requestDispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
+    public ModelAndView show() {
+        ModelAndView modelAndView = new ModelAndView("search");
+        modelAndView.addObject("products", ProductService.products);
+        return modelAndView;
     }
-
     @GetMapping("/create")
-    public String createForm() {
-        return "/createProduct.jsp";
+    public ModelAndView createForm() {
+        ModelAndView modelAndView = new ModelAndView("createProduct");
+        return modelAndView;
     }
 
     @PostMapping("/create")
@@ -41,9 +40,10 @@ public class ProductController {
     }
 
     @GetMapping("/edit")
-    public String editForm(HttpServletRequest request, @RequestParam int index) {
-        request.setAttribute("p", ProductService.products.get(index));
-        return "/editProduct.jsp";
+    public ModelAndView editForm( @RequestParam int index) {
+        ModelAndView modelAndView = new ModelAndView("editProduct");
+        modelAndView.addObject("product",ProductService.products.get(index));
+        return modelAndView;
     }
 
     @PostMapping("/edit")
