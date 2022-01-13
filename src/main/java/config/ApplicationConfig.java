@@ -12,6 +12,7 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -32,9 +33,8 @@ import java.util.Properties;
 @EnableWebMvc
 @ComponentScan("controller")
 @Component
-@PropertySource("classpath:validation-message.properties")
+@EnableTransactionManagement
 //@EnableJpaRepositories("codegym.repository")
-//@EnableTransactionManagement
 public class ApplicationConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -73,56 +73,56 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     // chỉ cho Spring biết chỗ lấy tài liệu tĩnh.(js,css,img)
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/i/**")
-                .addResourceLocations("file:C:\\Users\\Admind\\Desktop\\demoFramWord\\src\\main\\webapp/");
+                .addResourceLocations("file:C:\\Users\\Admind\\Desktop\\demoFramWord\\src\\main\\webapp\\wepPro\\public/");
     }
 
-    //    Cấu hình để kết nối CSDL
+    //    Cấu hình kích cỡ tối đa file upload
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSizePerFile(10000000);
+        multipartResolver.setMaxUploadSizePerFile(1000000000);
         return multipartResolver;
     }
 
-    //    Cấu hình để kết nối CSDL
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/DemoORM");
-        dataSource.setUsername("root");
-        dataSource.setPassword("12345678");
-        return dataSource;
-    }
-
-    // cấu hình thằng chứa entity
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[]{"model"});
-        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        em.setJpaVendorAdapter(vendorAdapter);
-        em.setJpaProperties(additionalProperties());
-        return em;
-    }
-
-    // cấu hình để cho hibernate tự động tạo bảng cho mình.
-    Properties additionalProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-        return properties;
-    }
-
-    // cấu hình thằng để thao tác với CSDL
-    @Bean
-    public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
-        return entityManagerFactory.createEntityManager();
-    }
+//    //    Cấu hình để kết nối CSDL
+//    @Bean
+//    public DataSource dataSource() {
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//        dataSource.setUrl("jdbc:mysql://localhost:3306/DemoORM");
+//        dataSource.setUsername("root");
+//        dataSource.setPassword("12345678");
+//        return dataSource;
+//    }
+//
+//    // cấu hình thằng chứa entity
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+//        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+//        em.setDataSource(dataSource());
+//        em.setPackagesToScan(new String[]{"model"});
+//        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+//        em.setJpaVendorAdapter(vendorAdapter);
+//        em.setJpaProperties(additionalProperties());
+//        return em;
+//    }
+//
+//    // cấu hình để cho hibernate tự động tạo bảng cho mình.
+//    Properties additionalProperties() {
+//        Properties properties = new Properties();
+//        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+//        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+//        return properties;
+//    }
+//
+//    // cấu hình thằng để thao tác với CSDL
+//    @Bean
+//    public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
+//        return entityManagerFactory.createEntityManager();
+//    }
 //   hết Cấu hình để kết nối CSDL
 
-//
+
 //    @Bean
 //    public IProducRepo iProducRepo() {
 //        return new ProductRepo();

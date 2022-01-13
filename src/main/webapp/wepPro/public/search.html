@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results for </title>
 
-    <link rel="stylesheet" href="/i/wepPro/public/css/home.css">
-    <link rel="stylesheet" href="/i/wepPro/public/css/search.css">
+    <link rel="stylesheet" href="/i/css/home.css">
+    <link rel="stylesheet" href="/i/css/search.css">
 
 </head>
 <body>
 
-<nav class="navbar"></nav>
+<nav th:class="navbar"></nav>
 
 <section class="search-results">
     <h2 class="heading">search results for <span>product</span></h2>
@@ -21,58 +21,19 @@
             <div class="product-image">
                 <span class="discount-tag">50% off</span>
                 <span class="discount-tag" th:text="${loop.count}"></span>
-                <img th:src="${p.img}" class="product-thumb" alt="">
-                                    <button class="card-btn">add to whislist</button>
-
-
+                <img th:src="${p.img}" width="150" height="100" class="product-thumb" alt="">
+                <button class="card-btn">add to whislist</button>
             </div>
 
             <div class="product-info">
                 <h2 class="product-brand" th:text="${p.name}"></h2>
-                <button ><a th:href="@{/edit(index=${loop.index})}"> edit</a></button>
-                <button ><a th:href="@{/delete(index=${loop.index})}"> delete</a></button>
+                <p class="product-short-des" th:text="${p.categories.name}"></p>
+                <span class="price" th:text="${p.price}"> $</span><span class="actual-price">$4000</span>
+                <button><a th:href="@{/edit(index=${loop.index})}"> edit</a></button>
+                <button><a th:href="@{/delete(index=${loop.index})}"> delete</a></button>
                 <button class="bubble-legend-symbol"><a href="/create">Create</a></button>
-                <p class="product-short-des" th:text="${p.categories}"></p>
-                <p class="product-short-des" th:text="${p.date}"></p>
-                <span class="price" th:text="${p.price}"></span><span class="actual-price">$40</span>
 
-            </div>
-        </div>
 
-        <div class="product-card">
-            <div class="product-image">
-                <span class="discount-tag">50% off</span>
-                <img src="/i/wepPro/public/img/card2.png" class="product-thumb" alt="">
-                <button class="card-btn">add to whislist</button>
-            </div>
-            <div class="product-info">
-                <h2 class="product-brand">brand</h2>
-                <p class="product-short-des">a short line about the cloth..</p>
-                <span class="price">$20</span><span class="actual-price">$40</span>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-image">
-                <span class="discount-tag">50% off</span>
-                <img src="/i/wepPro/public/img/card3.png" class="product-thumb" alt="">
-                <button class="card-btn">add to whislist</button>
-            </div>
-            <div class="product-info">
-                <h2 class="product-brand">brand</h2>
-                <p class="product-short-des">a short line about the cloth..</p>
-                <span class="price">$20</span><span class="actual-price">$40</span>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-image">
-                <span class="discount-tag">50% off</span>
-                <img src="/i/wepPro/public/img/card4.png" class="product-thumb" alt="">
-                <button class="card-btn">add to whislist</button>
-            </div>
-            <div class="product-info">
-                <h2 class="product-brand">brand</h2>
-                <p class="product-short-des">a short line about the cloth..</p>
-                <span class="price">$20</span><span class="actual-price">$40</span>
             </div>
         </div>
         <!--            <div class="product-card">-->
@@ -176,8 +137,8 @@
 
 <footer></footer>
 
-<script src="/i/wepPro/public/js/nav.js"></script>
-<script src="/i/wepPro/public/js/footer.js"></script>
+<script src="/i/js/nav.js"></script>
+<script src="/i/js/footer.js"></script>
 
 </body>
 </html>

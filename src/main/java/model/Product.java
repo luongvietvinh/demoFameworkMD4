@@ -1,7 +1,5 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.sql.Date;
 
 public class Product {
@@ -9,19 +7,18 @@ public class Product {
     private String name;
     private double price;
     private Categories categories;
-    private Date date;
     private String img;
+
 
 
     public Product() {
     }
 
-    public Product(long id, String name, double price, Categories categories, Date date, String img) {
+    public Product(long id, String name, double price, Categories categories, String img) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.categories = categories;
-        this.date = date;
         this.img = img;
     }
 
@@ -55,14 +52,6 @@ public class Product {
 
     public void setCategories(Categories categories) {
         this.categories = categories;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getImg() {

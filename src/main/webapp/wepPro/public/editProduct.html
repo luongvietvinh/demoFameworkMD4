@@ -12,12 +12,23 @@
 
             <span>Edit Product</span>
         </div>
-        <form  method="post">
-            <p th:object="${product}"></p>
-            <input type="text" name="id" th:value="${product.id}">
-            <input type="text" name="name" th:value="${product.name}">
-            <input type="text" name="img" th:value="${product.img}">
-            <button type="submit" class="btn">Register</button>
+        <form  method="post" th:object="${product}" enctype="multipart/form-data" >
+            <table>
+               <td><input th:field="*{id}"></td>
+                <td><input th:field="*{name}"></td>
+                <td><input th:field="*{price}"></td>
+                <td><select th:field="*{categories.name}" >
+                    <option value="sinshedo">sinshedo</option>
+                    <option value="jav grop">jav grop</option>
+                    <option value="DHC">DHC</option>
+                </select></td>
+                <td><img th:src="${product.img}" width="200" height="150" alt=""></td>
+                <td><input th:field="*{img}" hidden></td>
+                <td><input type="file" name="uppImg"></td>
+
+                <button type="submit" class="btn">Register</button>
+            </table>
+
         </form>
 
     </div>

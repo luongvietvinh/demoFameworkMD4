@@ -6,10 +6,10 @@
 }
 
 .image-slider{
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
     position: relative;
-    background-image: url('../img/product\ image\ 1.png');
+    background-image: url('../i/img/product\ image\ 1.png');
     background-size: cover;
 }
 
@@ -18,12 +18,12 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 90%;
+    width: 80%;
     background: #fff;
     border-radius: 5px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    height: 100px;
+    height: 90px;
     grid-gap: 10px;
     padding: 10px;
 }

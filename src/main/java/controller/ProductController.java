@@ -4,7 +4,9 @@ package controller;
 import model.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import service.ProductService;
 
@@ -12,6 +14,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -30,11 +33,21 @@ public class ProductController {
     @GetMapping("/create")
     public ModelAndView createForm() {
         ModelAndView modelAndView = new ModelAndView("createProduct");
+        modelAndView.addObject("product" , new Product());
         return modelAndView;
     }
 
     @PostMapping("/create")
-    public String createProduct(@ModelAttribute Product product) {
+    public String createProduct(@ModelAttribute ("product") Product product, @RequestParam MultipartFile uppImg ) {
+       String filename = uppImg.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(uppImg.getBytes(),new File("C:\\Users\\Admind\\Desktop\\demoFramWord\\src\\main\\webapp\\wepPro\\public\\img/" + filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        product.setImg("/i/img/" +filename);
+
         productService.create(product);
         return "redirect:/product";
     }
@@ -45,10 +58,17 @@ public class ProductController {
         modelAndView.addObject("product",ProductService.products.get(index));
         return modelAndView;
     }
+    @PostMapping ("/edit")
+    public String edit(@RequestParam int index, @ModelAttribute ("product") Product product , @RequestParam MultipartFile uppImg){
+        String fileName = uppImg.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(uppImg.getBytes(),new File("C:\\Users\\Admind\\Desktop\\demoFramWord\\src\\main\\webapp\\wepPro\\public\\img/" + fileName));
+            product.setImg("/i/img/" + fileName);
+        } catch (IOException e) {
+            System.err.println("chưa uppload file");
+        }
 
-    @PostMapping("/edit")
-    public String edit(@RequestParam int index, @ModelAttribute Product product){
-        productService.edit(index, product);
+        productService.edit(index,product);
         return "redirect:/product";
     }
 

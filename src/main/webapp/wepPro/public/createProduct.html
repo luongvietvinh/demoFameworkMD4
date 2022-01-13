@@ -12,11 +12,18 @@
             <span onclick="register()">create Product</span>
             <hr id="Indicator">
         </div>
-        <form  action="/create" method="post">
-
-            <p><input type="text"name="id" placeholder="id"> </p> <br>
-            <p><input type="text" name="name" placeholder="name"></p><br>
-            <p><input type="text" name="img" placeholder="img">
+        <form  action="/create" method="post" th:object="${product}" enctype="multipart/form-data">
+            <p><input th:field="*{id}" placeholder="id"> </p> <br>
+            <p><input th:field="*{name}" placeholder="name"></p><br>
+            <p><input th:field="*{price}" placeholder="price"></p><br>
+            <p>
+                <select th:field="${product.categories.name}">
+                    <option value="sinshedo">sinshedo</option>
+                    <option value="jav grop">jav grop</option>
+                    <option value="DHC">DHC</option>
+            </select>
+            </p>
+            <p><input name="uppImg" type="file">
                 <button type="submit" class="btn">Register</button></p>
         </form>
 
