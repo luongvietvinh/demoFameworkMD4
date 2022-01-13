@@ -6,11 +6,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.JpaVendorAdapter;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -21,12 +16,6 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import service.ProductService;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-import java.util.Properties;
 
 
 @Configuration
@@ -84,7 +73,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
         return multipartResolver;
     }
 
-//    //    Cấu hình để kết nối CSDL
+    //    Cấu hình để kết nối CSDL
 //    @Bean
 //    public DataSource dataSource() {
 //        DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -120,19 +109,19 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
 //    public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
 //        return entityManagerFactory.createEntityManager();
 //    }
-//   hết Cấu hình để kết nối CSDL
-
-
+////   hết Cấu hình để kết nối CSDL
+//
+//
 //    @Bean
-//    public IProducRepo iProducRepo() {
+//    public IProductRepo iProducRepo() {
 //        return new ProductRepo();
 //    }
-
-    @Bean
-    public ProductService productService() {
-        return new ProductService();
-    }
-
+//
+//    @Bean
+//    public ProductService productService() {
+//        return new ProductService();
+//    }
+//
 
 //    @Bean
 //    public IAccountService iAccountService() {
@@ -142,7 +131,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
 //    public ValidateUserName validateUserName() {
 //        return new ValidateUserName();
 //    }
-//
+
 //    @Bean
 //    public MessageSource messageSource() {
 //        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();

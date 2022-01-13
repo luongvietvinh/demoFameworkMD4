@@ -36,7 +36,6 @@ public class ProductController {
         modelAndView.addObject("product" , new Product());
         return modelAndView;
     }
-
     @PostMapping("/create")
     public String createProduct(@ModelAttribute ("product") Product product, @RequestParam MultipartFile uppImg ) {
        String filename = uppImg.getOriginalFilename();
@@ -45,9 +44,7 @@ public class ProductController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         product.setImg("/i/img/" +filename);
-
         productService.create(product);
         return "redirect:/product";
     }
@@ -67,16 +64,42 @@ public class ProductController {
         } catch (IOException e) {
             System.err.println("chưa uppload file");
         }
-
+        String imgOld = ProductService.products.get(index).getImg();
         productService.edit(index,product);
+        if(!imgOld.equals(product.getImg()) && !product.getImg().isEmpty()){
+            String filedelete = imgOld.replaceAll("/i/img/","");
+            String file1 = "C:\\Users\\Admind\\Desktop\\demoFramWord\\src\\main\\webapp\\wepPro\\public\\img\\" +filedelete;
+            File file = new File(file1);
+            if(file.exists()){
+                file.delete();
+            }
+        }
         return "redirect:/product";
     }
 
+//    @GetMapping("/delete")
+//    public String delete(@RequestParam int index) {
+//        productService.delete(index);
+//        return "redirect:/product";
+//    }
     @GetMapping("/delete")
-    public String delete(@RequestParam int index) {
+    public String deleteCustomer(@RequestParam int index){
+        Product product = ProductService.products.get(index);
+        if(product.getImg().isEmpty()){
+            productService.delete(index);
+            return "redirect:/product";
+        }
+
+        String filedelete = product.getImg().replaceAll("/i/img/","");
+        String file1 = "C:\\Users\\Admind\\Desktop\\demoFramWord\\src\\main\\webapp\\wepPro\\public\\img\\" +filedelete;
+        File file = new File(file1);
+        if(file.exists()){
+            file.delete();
+        }
         productService.delete(index);
         return "redirect:/product";
     }
+
 
 
 }
